@@ -1,0 +1,103 @@
+﻿<div class="panel panel-primary" style="margin: 50px">
+    <div class="panel-heading">Auth Tool</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-2">
+                <label class="no-colon">Grant Types</label>
+                <select class="form-control" bindon-ngModel="grantTypes" (ngModelChange)="onChangeGrantTypes($event)">
+                    <option>Resource Owner</option>
+                    <option>Client Credentials</option>
+                </select>
+            </div>
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label class="no-colon">Authority</label>
+                    <input type="url" bindon-ngModel="authority" class="form-control" id="authority">
+                </div>
+            </div>
+
+        </div>
+        <div class="row" *ngIf="isResourceOwner">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="no-colon">Username</label>
+                    <input type="text" bindon-ngModel="username" class="form-control" id="username">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="no-colon">Password</label>
+                    <input type="text" bindon-ngModel="password" class="form-control" id="password">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="no-colon">Client Id</label>
+                    <input type="text" bindon-ngModel="clientId" class="form-control" id="clientId">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="no-colon">Client Secret</label>
+                    <input type="text" bindon-ngModel="secret" class="form-control" id="secret">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="no-colon">Scope</label>
+            <input type="text" bindon-ngModel="scope" class="form-control">
+        </div>
+        <div class="form-group" *ngIf="!getTokenOnly">
+            <div class="row">
+                <div class="col-md-2">
+                    <select class="form-control" bindon-ngModel="selectedVerb" (ngModelChange)="onChangeVerb($event)">
+                        <option>GET</option>
+                        <option>PUT</option>
+                        <option>POST</option>
+                        <option>DELETE</option>
+                    </select>
+                </div>
+                <div class="col-md-10">
+                    <input type="url" bindon-ngModel="url" class="form-control">
+                </div>
+            </div>
+            <div class="row" *ngIf="isPostOrPut">
+                <div style="margin: 15px">
+                    <label>Payload</label>
+                    <textarea class="form-control" rows="5" bindon-ngModel="payload" ></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label><input type="checkbox" bindon-ngModel="getTokenOnly" (ngModelChange)="onChangeGetTokenOnly($event)"> GetToken Only?</label>
+        </div>
+        <button type="submit" [disabled]="wait" class="btn btn-primary" (click)="submit($event.target, 'Thinking...')">Submit</button>
+        <div class="row">
+            <div style="margin: 15px">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>AccessToken</label>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="pull-right">{{idpHttpStatusResult}}</span>
+                    </div>
+                </div>
+                <textarea class="form-control" rows="10" [ngModel]="tokenResult" ></textarea>
+            </div>
+            <div style="margin: 15px" *ngIf="!getTokenOnly">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Response </label>
+                    </div>
+                    <div class="col-md-6">
+                        <span class="pull-right">{{urlHttpStatusResult}}</span>
+                    </div>
+                </div>
+                <textarea class="form-control" rows="10" [ngModel]="urlResult"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
